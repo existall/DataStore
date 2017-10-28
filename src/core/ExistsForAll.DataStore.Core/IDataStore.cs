@@ -12,7 +12,7 @@ namespace ExistsForAll.DataStore.Core
 
 		Task<long> CountAsync(Action<IQueryBuilder<T>> queryManipulator = null);
 
-		Task<T> GetByIdAsync(T id);
+		Task<T> GetByIdAsync(object id);
 		Task AddAsync(T t);
 		Task SaveAsync(T t);
 		Task UpdateAsync(T t);

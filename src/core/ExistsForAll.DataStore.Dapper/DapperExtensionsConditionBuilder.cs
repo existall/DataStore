@@ -1,155 +1,136 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Linq.Expressions;
+using System.Reflection;
 using DapperExtensions;
 using ExistsForAll.DataStore.Core;
 
 namespace ExistsForAll.DataStore.DapperExtensions
 {
-
-	internal class Person
-	{
-		public string Name { get; set; }
-		public int Age { get; set; }
-	}
-
-	internal class TestDataStore : DapperExtensionsDataStore<Person>
-	{
-		private readonly IDbConnectionProvider _connectionProvider;
-
-		public TestDataStore(IDbConnectionProvider connectionProvider) 
-			: base(connectionProvider)
-		{
-			_connectionProvider = connectionProvider;
-
-
-			this.QueryAsync(x => x.Where(y => y.Equal(z => z.Age, 2)));
-
-		}
-	}
-
-	public interface IX<T,TValue> :IConditionBuilder<T>
-	{ }
-
-	public class X<T> : IX<T,object>
-	{
-		public IConditionBuilder<T> Equal<TValue>(Expression<Func<T, TValue>> member, TValue value)
-		{
-			throw new NotImplementedException();
-		}
-
-		public IConditionBuilder<T> NotEqual<TValue>(Expression<Func<T, TValue>> member, TValue value)
-		{
-			throw new NotImplementedException();
-		}
-
-		public IConditionBuilder<T> In<TValue>(Expression<Func<T, TValue>> member, ICollection<TValue> value)
-		{
-			throw new NotImplementedException();
-		}
-
-		public IConditionBuilder<T> NotIn<TValue>(Expression<Func<T, TValue>> member, ICollection<TValue> value)
-		{
-			throw new NotImplementedException();
-		}
-
-		public IConditionBuilder<T> GreaterOrEqual<TValue>(Expression<Func<T, TValue>> member, TValue value)
-		{
-			throw new NotImplementedException();
-		}
-
-		public IConditionBuilder<T> GreaterThan<TValue>(Expression<Func<T, TValue>> member, TValue value)
-		{
-			throw new NotImplementedException();
-		}
-
-		public IConditionBuilder<T> LessOrEqual<TValue>(Expression<Func<T, TValue>> member, TValue value)
-		{
-			throw new NotImplementedException();
-		}
-
-		public IConditionBuilder<T> LessThan<TValue>(Expression<Func<T, TValue>> member, TValue value)
-		{
-			throw new NotImplementedException();
-		}
-
-		public IConditionBuilder<T> IsNull<TValue>(Expression<Func<T, TValue>> member)
-		{
-			throw new NotImplementedException();
-		}
-
-		public IConditionBuilder<T> IsNotNull<TValue>(Expression<Func<T, TValue>> member)
-		{
-			throw new NotImplementedException();
-		}
-
-		public IConditionBuilder<T> Or(Action<IConditionBuilder<T>> orAction)
-		{
-			throw new NotImplementedException();
-		}
-	}
-
-
-
 	internal class DapperExtensionsConditionBuilder<T> : IConditionBuilder<T> where T : class
 	{
-		PredicateGroup Group = new PredicateGroup();
+		public IPredicate Predicate { get; private set; }
 
-		public IConditionBuilder<T> Equal<TValue>(Expression<Func<T, TValue>> member, TValue value)
+		private void CombinePredicates(IPredicate predicate)
 		{
-			Expression<Func<T, object>> x = arg => arg;
-			Predicates.Field(member.Body, Operator.Eq, value, true);
-			throw new NotImplementedException();
+			if (Predicate == null)
+			{
+				Predicate = predicate;
+				return;
+			}
+
+			Predicate = Predicates.Group(GroupOperator.And, Predicate, predicate);
 		}
 
-		public IConditionBuilder<T> NotEqual<TValue>(Expression<Func<T, TValue>> member, TValue value)
+
+		public IConditionBuilder<T> Equal(Expression<Func<T, object>> member, object value)
 		{
-			throw new NotImplementedException();
+			var predicate = Predicates.Field(member, Operator.Eq, value);
+			CombinePredicates(predicate);
+			return this;
 		}
 
-		public IConditionBuilder<T> In<TValue>(Expression<Func<T, TValue>> member, ICollection<TValue> value)
+		public IConditionBuilder<T> NotEqual(Expression<Func<T, object>> member, object value)
 		{
-			throw new NotImplementedException();
+			var predicate = Predicates.Field(member, Operator.Eq, value, true);
+			CombinePredicates(predicate);
+			return this;
 		}
 
-		public IConditionBuilder<T> NotIn<TValue>(Expression<Func<T, TValue>> member, ICollection<TValue> value)
+		public IConditionBuilder<T> In(Expression<Func<T, object>> member, ICollection value)
 		{
-			throw new NotImplementedException();
+			var memberInfo = ReflectionHelper.GetProperty(member) as PropertyInfo;
+
+			var inPredicate = new InPredicate<T>() { Collection = value, PropertyName = memberInfo.Name };
+
+			//var predicateList = new PredicateGroup { Operator = GroupOperator.Or, Predicates = new List<IPredicate>() };
+
+			//foreach (var item in value)
+			//{
+			//	Predicates.Field(member, Operator.Eq, item);
+			//}
+
+			CombinePredicates(inPredicate);
+
+			return this;
 		}
 
-		public IConditionBuilder<T> GreaterOrEqual<TValue>(Expression<Func<T, TValue>> member, TValue value)
+		public IConditionBuilder<T> NotIn(Expression<Func<T, object>> member, ICollection value)
 		{
-			throw new NotImplementedException();
+			var memberInfo = ReflectionHelper.GetProperty(member) as PropertyInfo;
+
+			var inPredicate = new InPredicate<T>() { Collection = value, PropertyName = memberInfo.Name, Not = true };
+
+			//var predicateList = new PredicateGroup { Operator = GroupOperator.Or, Predicates = new List<IPredicate>() };
+
+			//foreach (var item in value)
+			//{
+			//	Predicates.Field(member, Operator.Eq, item, true);
+			//}
+
+			CombinePredicates(inPredicate);
+
+			return this;
 		}
 
-		public IConditionBuilder<T> GreaterThan<TValue>(Expression<Func<T, TValue>> member, TValue value)
+		public IConditionBuilder<T> GreaterOrEqual(Expression<Func<T, object>> member, object value)
 		{
-			throw new NotImplementedException();
+			return InnerFieldSet(member, Operator.Ge, value);
 		}
 
-		public IConditionBuilder<T> LessOrEqual<TValue>(Expression<Func<T, TValue>> member, TValue value)
+		public IConditionBuilder<T> GreaterThan(Expression<Func<T, object>> member, object value)
 		{
-			throw new NotImplementedException();
+			return InnerFieldSet(member, Operator.Gt, value);
 		}
 
-		public IConditionBuilder<T> LessThan<TValue>(Expression<Func<T, TValue>> member, TValue value)
+		public IConditionBuilder<T> LessOrEqual(Expression<Func<T, object>> member, object value)
 		{
-			throw new NotImplementedException();
+			return InnerFieldSet(member, Operator.Le, value);
 		}
 
-		public IConditionBuilder<T> IsNull<TValue>(Expression<Func<T, TValue>> member)
+		public IConditionBuilder<T> LessThan(Expression<Func<T, object>> member, object value)
 		{
-			throw new NotImplementedException();
+			return InnerFieldSet(member, Operator.Lt, value);
 		}
 
-		public IConditionBuilder<T> IsNotNull<TValue>(Expression<Func<T, TValue>> member)
+		public IConditionBuilder<T> IsNull(Expression<Func<T, object>> member)
 		{
-			throw new NotImplementedException();
+			return InnerFieldSet(member, Operator.Eq, null);
+		}
+
+		public IConditionBuilder<T> IsNotNull(Expression<Func<T, object>> member)
+		{
+			return InnerFieldSet(member, Operator.Eq, null, true);
 		}
 
 		public IConditionBuilder<T> Or(Action<IConditionBuilder<T>> orAction)
 		{
-			throw new NotImplementedException();
+			var condition = new DapperExtensionsConditionBuilder<T>();
+
+			orAction(condition);
+
+			var predicate = condition.Predicate;
+
+			if (predicate == null)
+				return this;
+
+			if (Predicate == null)
+			{
+				Predicate = predicate;
+				return this;
+			}
+				
+			Predicate =  Predicates.Group(GroupOperator.Or, Predicate, predicate);
+			return this;
+		}
+
+		private IConditionBuilder<T> InnerFieldSet(Expression<Func<T, object>> member, Operator @operator, object value, bool not = false)
+		{
+			var fieldPredicate = Predicates.Field(member, @operator, value, not);
+
+			CombinePredicates(fieldPredicate);
+
+			return this;
 		}
 	}
 }

@@ -1,30 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Linq.Expressions;
 
 namespace ExistsForAll.DataStore.Core
 {
 	public interface IConditionBuilder<T>
 	{
-		IConditionBuilder<T> Equal<TValue>(Expression<Func<T, TValue>> member, TValue value);
+		IConditionBuilder<T> Equal(Expression<Func<T, object>> member, object value);
 
-		IConditionBuilder<T> NotEqual<TValue>(Expression<Func<T, TValue>> member, TValue value);
+		IConditionBuilder<T> NotEqual(Expression<Func<T, object>> member, object value);
 
-		IConditionBuilder<T> In<TValue>(Expression<Func<T, TValue>> member, ICollection<TValue> value);
+		IConditionBuilder<T> In(Expression<Func<T, object>> member, ICollection value);
 
-		IConditionBuilder<T> NotIn<TValue>(Expression<Func<T, TValue>> member, ICollection<TValue> value);
+		IConditionBuilder<T> NotIn(Expression<Func<T, object>> member, ICollection value);
 
-		IConditionBuilder<T> GreaterOrEqual<TValue>(Expression<Func<T, TValue>> member, TValue value);
+		IConditionBuilder<T> GreaterOrEqual(Expression<Func<T, object>> member, object value);
 
-		IConditionBuilder<T> GreaterThan<TValue>(Expression<Func<T, TValue>> member, TValue value);
+		IConditionBuilder<T> GreaterThan(Expression<Func<T, object>> member, object value);
 
-		IConditionBuilder<T> LessOrEqual<TValue>(Expression<Func<T, TValue>> member, TValue value);
+		IConditionBuilder<T> LessOrEqual(Expression<Func<T, object>> member, object value);
 
-		IConditionBuilder<T> LessThan<TValue>(Expression<Func<T, TValue>> member, TValue value);
+		IConditionBuilder<T> LessThan(Expression<Func<T, object>> member, object value);
 
-		IConditionBuilder<T> IsNull<TValue>(Expression<Func<T, TValue>> member);
+		IConditionBuilder<T> IsNull(Expression<Func<T, object>> member);
 
-		IConditionBuilder<T> IsNotNull<TValue>(Expression<Func<T, TValue>> member);
+		IConditionBuilder<T> IsNotNull(Expression<Func<T, object>> member);
 
 		IConditionBuilder<T> Or(Action<IConditionBuilder<T>> orAction);
 	}

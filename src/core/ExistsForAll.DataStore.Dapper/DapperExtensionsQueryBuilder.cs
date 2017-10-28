@@ -8,20 +8,20 @@ namespace ExistsForAll.DataStore.DapperExtensions
 {
 	internal class DapperExtensionsQueryBuilder<T> : IQueryBuilder<T>
 	{
-		private PredicateGroup Predicates { get; } = new PredicateGroup { Operator = GroupOperator.And, Predicates = new List<IPredicate>() };
+		private IPredicate Predicate { get; }
 
 		public IQueryBuilder<T> Where(Action<IConditionBuilder<T>> action)
 		{
-			Predicates.
+			//Predicates.
 
+			//Predicate.
 			throw new NotImplementedException();
+
 		}
 
 		public IQueryBuilder<T> Take(int limit)
 		{
-			global::DapperExtensions.DapperExtensions.Update()
-
-			Predicate<T>.Combine()
+			throw new NotImplementedException();
 		}
 
 		public IQueryBuilder<T> Skip(int amount)
