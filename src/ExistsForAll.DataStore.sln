@@ -9,11 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{4048E39D-0
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistsForAll.DataStore.Core", "core\ExistsForAll.DataStore.Core\ExistsForAll.DataStore.Core.csproj", "{BC541223-5B04-4BDD-BD5A-3AF93C6953DC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistsForAll.DataStore.DapperExtensions", "core\ExistsForAll.DataStore.Dapper\ExistsForAll.DataStore.DapperExtensions.csproj", "{2FB5AE1A-0DD1-4931-8CB4-859F0D5065B9}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B735C08E-C9C5-4054-96D0-AB3BD695C087}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExistsForAll.DataStore.DapperExtensions.Tests", "tests\ExistsForAll.DataStore.DapperExtensions.Tests\ExistsForAll.DataStore.DapperExtensions.Tests.csproj", "{58837C15-A765-4ED2-9A99-B362A67AD7A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExistsForAll.DataStore.DapperExtensions", "core\ExistsForAll.DataStore.Dapper\ExistsForAll.DataStore.DapperExtensions.csproj", "{2FB5AE1A-0DD1-4931-8CB4-859F0D5065B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +25,6 @@ Global
 		{2FB5AE1A-0DD1-4931-8CB4-859F0D5065B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FB5AE1A-0DD1-4931-8CB4-859F0D5065B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FB5AE1A-0DD1-4931-8CB4-859F0D5065B9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{58837C15-A765-4ED2-9A99-B362A67AD7A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{58837C15-A765-4ED2-9A99-B362A67AD7A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{58837C15-A765-4ED2-9A99-B362A67AD7A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{58837C15-A765-4ED2-9A99-B362A67AD7A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -40,7 +32,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{BC541223-5B04-4BDD-BD5A-3AF93C6953DC} = {4048E39D-0585-4E39-A837-9113D3131BE6}
 		{2FB5AE1A-0DD1-4931-8CB4-859F0D5065B9} = {4048E39D-0585-4E39-A837-9113D3131BE6}
-		{58837C15-A765-4ED2-9A99-B362A67AD7A6} = {B735C08E-C9C5-4054-96D0-AB3BD695C087}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FA3ADC2F-C675-471C-BFE9-E821B1D2AED9}

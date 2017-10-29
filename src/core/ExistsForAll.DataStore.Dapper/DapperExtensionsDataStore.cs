@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net.Http.Headers;
+using System.Reflection;
 using System.Threading.Tasks;
 using Dapper;
 using DapperExtensions;
 using DapperExtensions.Mapper;
+using DapperExtensions.Sql;
 using ExistsForAll.DataStore.Core;
 
 namespace ExistsForAll.DataStore.DapperExtensions
@@ -24,6 +27,9 @@ namespace ExistsForAll.DataStore.DapperExtensions
 		{
 			using (var con = _connectionProvider.GetOpenConnection())
 			{
+				Predicates.
+				con.
+
 				await con.InsertAsync(t);
 			}
 		}
@@ -48,14 +54,31 @@ namespace ExistsForAll.DataStore.DapperExtensions
 			});
 		}
 
-		public Task<List<T>> GetByFieldAsync<TKey>(Expression<Func<T, TKey>> selector, TKey key)
+		public async Task<List<T>> GetByFieldAsync(Expression<Func<T, object>> selector, object key)
 		{
-			throw new NotImplementedException();
+			using (var con = _connectionProvider.GetOpenConnection())
+			{
+				var predicate = Predicates.Field(selector, Operator.Eq, key);
+
+				var result = await con.GetListAsync<T>(predicate);
+				return result.ToList();
+			}
 		}
 
-		public Task<List<T>> GetByFieldAsync<TKey>(Expression<Func<T, TKey>> selector, IEnumerable<TKey> ids)
+		public async Task<List<T>> GetByFieldAsync(Expression<Func<T, object>> selector, IEnumerable<object> ids)
 		{
-			throw new NotImplementedException();
+			var query = new DapperExtensionsQueryBuilder<T>();
+
+			query.Where(x => x.In(selector, ids.ToArray()));
+
+			query.Predicate;
+
+			using (var con = _connectionProvider.GetOpenConnection())
+			{
+				var result = await con.GetListAsync<T>();
+
+				return result.ToList();
+			}
 		}
 
 		public async Task<T> GetByIdAsync(object id)
@@ -84,10 +107,9 @@ namespace ExistsForAll.DataStore.DapperExtensions
 
 		public async Task SaveAsync(T t)
 		{
-			using (var con = _connectionProvider.GetOpenConnection())
-			{
-				await con.(t);
-			}
+			throw new NotImplementedException();
+
+			// should be upsert not supported not by dapper - will be done.
 		}
 
 		public async Task UpdateAsync(T t)
@@ -100,57 +122,58 @@ namespace ExistsForAll.DataStore.DapperExtensions
 	}
 
 
-	public static class X
-	{
+	//public static class X
+	//{
 
-		public static void Upsert<T>(this IDapperImplementor implementor, IDbConnection connection, T entity, IDbTransaction transaction, int? commandTimeout) where T : class
-		{
-			IClassMapper classMap = implementor.SqlGenerator.Configuration.GetMap<T>();
-			var properties = classMap.Properties.Where(p => p.KeyType != KeyType.NotAKey);
+	//	public static void Upsert<T>(this IDapperImplementor implementor, IDbConnection connection, T entity, IDbTransaction transaction, int? commandTimeout) where T : class
+	//	{
+	//		IClassMapper classMap = implementor.SqlGenerator.Configuration.GetMap<T>();
+	//		var properties = classMap.Properties.Where(p => p.KeyType != KeyType.NotAKey);
 
-			foreach (var column in properties)
-			{
-				if (column.KeyType == KeyType.Guid && (Guid)column.PropertyInfo.GetValue(entity, null) == Guid.Empty)
-				{
-					Guid comb = SqlGenerator.Configuration.GetNextGuid();
-					column.PropertyInfo.SetValue(entity, comb, null);
-				}
-			}
+	//		foreach (var column in properties)
+	//		{
+	//			if (column.KeyType == KeyType.Guid && (Guid)column.PropertyInfo.GetValue(entity, null) == Guid.Empty)
+	//			{
+	//				Guid comb = SqlGenerator.Configuration.GetNextGuid();
+	//				column.PropertyInfo.SetValue(entity, comb, null);
+	//			}
+	//		}
 
 
-			string sql = SqlGenerator.Insert(classMap);
+	//		string sql = SqlGenerator.Insert(classMap);
 
-			connection.Execute(sql, entity, transaction, commandTimeout, CommandType.Text);
-		}
+	//		connection.Execute(sql, entity, transaction, commandTimeout, CommandType.Text);
+	//	}
 
-		public static string X(IClassMapper classMap)
-		{
-			int[] i = { 0 };
+	//	public static string X(IClassMapper classMap, ISqlGenerator sqlGenerator)
+	//	{
+	//		int[] i = { 0 };
 
-			var ids = classMap.Properties
-				.Where(x => x.KeyType == KeyType.Identity && !x.IsReadOnly)
-				.Select(x => _map.CreateParameter("p" + i[0]++))
-				.ToArray();
+	//		var properties = classMap.Properties;
 
-			var update = _map
-				.Properties
-				.Where(x => !x.ReadOnly)
-				.Select(x => new { name = x.ColumnName, param = _map.CreateParameter("p" + i[0]++) })
-				.ToArray();
+	//		var ids = properties
+	//			.Where(x => x.KeyType == KeyType.Identity && !x.IsReadOnly)
+	//			.Select(x => sqlGenerator.GetColumnName(classMap,x,true))
+	//			.ToArray();
 
-			if (update.Length == 0)
-				return string.Format("INSERT IGNORE INTO {0}({1}) VALUES ({2});",
-					_map.TableName,
-					string.Join(", ", GetColumns().Select(x => x.ColumnName)),
-					string.Join(", ", ids.Concat(update.Select(x => x.param)))
-				);
+	//		var update = properties
+	//			.Where(x => !x.IsReadOnly && !x.Ignored && x.KeyType != KeyType.Identity)
+	//			.Select(x => new { name = sqlGenerator.GetColumnName(classMap, x, false), param = sqlGenerator.Configuration.Dialect.ParameterPrefix + x.Name})
+	//			.ToArray();
 
-			return string.Format("INSERT INTO {0}({1}) VALUES ({2}) ON DUPLICATE KEY UPDATE {3};",
-				_map.TableName,
-				string.Join(", ", GetColumns().Select(x => x.ColumnName)),
-				string.Join(", ", ids.Concat(update.Select(x => x.param))),
-				string.Join(", ", update.Select(x => x.name + " = " + x.param))
-			);
-		}
-	}
+	//		if (update.Length == 0)
+	//			return string.Format("INSERT IGNORE INTO {0}({1}) VALUES ({2});",
+	//				classMap.TableName,
+	//				string.Join(", ", GetColumns().Select(x => x.ColumnName)),
+	//				string.Join(", ", ids.Concat(update.Select(x => x.param)))
+	//			);
+
+	//		return string.Format("INSERT INTO {0}({1}) VALUES ({2}) ON DUPLICATE KEY UPDATE {3};",
+	//			_map.TableName,
+	//			string.Join(", ", GetColumns().Select(x => x.ColumnName)),
+	//			string.Join(", ", ids.Concat(update.Select(x => x.param))),
+	//			string.Join(", ", update.Select(x => x.name + " = " + x.param))
+	//		);
+	//	}
+	//}
 }

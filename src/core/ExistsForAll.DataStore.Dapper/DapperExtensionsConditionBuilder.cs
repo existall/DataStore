@@ -41,7 +41,7 @@ namespace ExistsForAll.DataStore.DapperExtensions
 		{
 			var memberInfo = ReflectionHelper.GetProperty(member) as PropertyInfo;
 
-			var inPredicate = new InPredicate<T>() { Collection = value, PropertyName = memberInfo.Name };
+			var inPredicate = new InPredicate<T>(value, memberInfo.Name);
 
 			//var predicateList = new PredicateGroup { Operator = GroupOperator.Or, Predicates = new List<IPredicate>() };
 
@@ -59,7 +59,7 @@ namespace ExistsForAll.DataStore.DapperExtensions
 		{
 			var memberInfo = ReflectionHelper.GetProperty(member) as PropertyInfo;
 
-			var inPredicate = new InPredicate<T>() { Collection = value, PropertyName = memberInfo.Name, Not = true };
+			var inPredicate = new InPredicate<T>(value, memberInfo.Name, true);
 
 			//var predicateList = new PredicateGroup { Operator = GroupOperator.Or, Predicates = new List<IPredicate>() };
 
@@ -119,8 +119,8 @@ namespace ExistsForAll.DataStore.DapperExtensions
 				Predicate = predicate;
 				return this;
 			}
-				
-			Predicate =  Predicates.Group(GroupOperator.Or, Predicate, predicate);
+
+			Predicate = Predicates.Group(GroupOperator.Or, Predicate, predicate);
 			return this;
 		}
 

@@ -8,8 +8,15 @@ namespace ExistsForAll.DataStore.DapperExtensions
 	public class InPredicate<T> : BasePredicate, IInPredicate
 		where T : class
 	{
-		public ICollection Collection { get; set; }
+		public ICollection Collection { get; }
 		public bool Not { get; set; }
+
+		public InPredicate(ICollection collection, string propertyName, bool isNot = false)
+		{
+			PropertyName = propertyName;
+			Collection = collection;
+			Not = isNot;
+		}
 
 		public override string GetSql(ISqlGenerator sqlGenerator, IDictionary<string, object> parameters)
 		{
