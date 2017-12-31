@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace ExistsForAll.DataStore.Core
+namespace ExistAll.DataStore
 {
 	public interface IQueryBuilder<T>
 	{

@@ -1,45 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using DapperExtensions;
-using ExistsForAll.DataStore.Core;
+using ExistAll.DataStore;
+using ExistsForAll.DapperExtensions;
+using ExistsForAll.DapperExtensions.Predicates;
 
 namespace ExistsForAll.DataStore.DapperExtensions
 {
-	internal class DapperExtensionsQueryBuilder<T> : IQueryBuilder<T>
+	internal class DapperQueryBuilder<T> : IQueryBuilder<T> where T : class
 	{
-		private readonly List<ISort> _sorts = new List<ISort>();
-
 		public IPredicate Predicate { get; private set; }
-		public int TakeLimit { get; private set; }
-		public int SkipAmount { get; private set; }
 
-		public IEnumerable<ISort> Sorts => _sorts;
+		public int? Limit { get; private set; }
+
+		public int? Amount { get; private set; }
+
+		public List<ISort> Sort { get; } = new List<ISort>();
+
+		public List<IProjection> Projections { get; } = new List<IProjection>();
 
 		public IQueryBuilder<T> Where(Action<IConditionBuilder<T>> action)
 		{
-			//Predicates.
+			var condition = new DapperConditionBuilder<T>();
 
-			//Predicate.
-			throw new NotImplementedException();
+			action(condition);
 
+			Predicate = condition.Predicate;
+
+			return this;
 		}
 
 		public IQueryBuilder<T> Take(int limit)
 		{
-			if (limit < 0)
-				throw new ArgumentException($"{nameof(limit)} value can't be less than zero.");
-
-			TakeLimit = limit;
+			Limit = limit;
 			return this;
 		}
 
 		public IQueryBuilder<T> Skip(int amount)
 		{
-			if (amount < 0)
-				throw new ArgumentException($"{nameof(amount)} value can't be less than zero.");
-
-			SkipAmount = amount;
+			Amount = amount;
 			return this;
 		}
 
@@ -47,8 +46,9 @@ namespace ExistsForAll.DataStore.DapperExtensions
 		{
 			foreach (var field in fields)
 			{
-				_sorts.Add(Predicates.Sort(field));
+				Sort.Add(Predicates.Sort(field));
 			}
+
 			return this;
 		}
 
@@ -56,8 +56,9 @@ namespace ExistsForAll.DataStore.DapperExtensions
 		{
 			foreach (var field in fields)
 			{
-				_sorts.Add(Predicates.Sort(field, false));
+				Sort.Add(Predicates.Sort(field, false));
 			}
+
 			return this;
 		}
 

@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace ExistsForAll.DataStore.Core
+namespace ExistAll.DataStore
 {
-	public interface IDataStore<T> where T : class
+	public interface ITypeDataStore<T> where T : class
 	{
-		Task<List<T>> QueryAsync(Action<IQueryBuilder<T>> queryManipulator);
+		Task<List<T>> QueryAsync(Action<ITypeQueryBuilder<T>> queryManipulator);
 		Task<List<T>> QueryAllAsync();
 
-		Task<long> CountAsync(Action<IQueryBuilder<T>> queryManipulator = null);
+		Task<long> CountAsync(Action<ITypeQueryBuilder<T>> queryManipulator = null);
 
-		Task<T> GetByIdAsync(object id);
+		Task<T> GetByIdAsync(T id);
 		Task AddAsync(T t);
 		Task SaveAsync(T t);
 		Task UpdateAsync(T t);

@@ -15,9 +15,4 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\core\ExistsForAll.DataStore.Core\ExistsForAll.DataStore.Core.csproj" />
-    <ProjectReference Include="..\..\core\ExistsForAll.DataStore.Dapper\ExistsForAll.DataStore.DapperExtensions.csproj" />
-  </ItemGroup>
-
 </Project>
