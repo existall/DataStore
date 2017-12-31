@@ -1,15 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SulotionItems", "SulotionItems", "{BD7658CE-6811-47AF-89AA-A35AA69BCBA0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{4048E39D-0585-4E39-A837-9113D3131BE6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistsForAll.DataStore.Core", "core\ExistsForAll.DataStore.Core\ExistsForAll.DataStore.Core.csproj", "{BC541223-5B04-4BDD-BD5A-3AF93C6953DC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B735C08E-C9C5-4054-96D0-AB3BD695C087}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExistsForAll.DataStore.DapperExtensions", "core\ExistsForAll.DataStore.Dapper\ExistsForAll.DataStore.DapperExtensions.csproj", "{2FB5AE1A-0DD1-4931-8CB4-859F0D5065B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistsForAll.DataStore.DapperExtensions.Tests", "tests\ExistsForAll.DataStore.DapperExtensions.Tests\ExistsForAll.DataStore.DapperExtensions.Tests.csproj", "{58837C15-A765-4ED2-9A99-B362A67AD7A6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistAll.DataStore", "core\ExistAll.DataStore\ExistAll.DataStore.csproj", "{05CA8956-CF7D-4BF7-A2E4-DB9E7C364332}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistAll.DataStore.EF.Core", "core\ExistAll.DataStore.EF.Core\ExistAll.DataStore.EF.Core.csproj", "{76CCBC56-476E-4D19-B5D0-1BB947CED837}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistAll.DataStore.MongoDb", "core\ExistAll.DataStore.MongoDb\ExistAll.DataStore.MongoDb.csproj", "{B9DA9B7D-133B-4F35-BD58-3CC7ACAEF6D4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistAll.DataStore.NHibernate", "core\ExistAll.DataStore.NHibernate\ExistAll.DataStore.NHibernate.csproj", "{4684284C-E95C-43DD-9C78-18E3D731FD65}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistsForAll.DataStore.DapperExtensions", "core\ExistsForAll.DataStore.DapperExtensions\ExistsForAll.DataStore.DapperExtensions.csproj", "{CC1D8569-B6D6-4B94-BD54-06A7C4005B9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,21 +27,41 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BC541223-5B04-4BDD-BD5A-3AF93C6953DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BC541223-5B04-4BDD-BD5A-3AF93C6953DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BC541223-5B04-4BDD-BD5A-3AF93C6953DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BC541223-5B04-4BDD-BD5A-3AF93C6953DC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2FB5AE1A-0DD1-4931-8CB4-859F0D5065B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2FB5AE1A-0DD1-4931-8CB4-859F0D5065B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2FB5AE1A-0DD1-4931-8CB4-859F0D5065B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2FB5AE1A-0DD1-4931-8CB4-859F0D5065B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58837C15-A765-4ED2-9A99-B362A67AD7A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58837C15-A765-4ED2-9A99-B362A67AD7A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58837C15-A765-4ED2-9A99-B362A67AD7A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58837C15-A765-4ED2-9A99-B362A67AD7A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05CA8956-CF7D-4BF7-A2E4-DB9E7C364332}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05CA8956-CF7D-4BF7-A2E4-DB9E7C364332}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05CA8956-CF7D-4BF7-A2E4-DB9E7C364332}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05CA8956-CF7D-4BF7-A2E4-DB9E7C364332}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76CCBC56-476E-4D19-B5D0-1BB947CED837}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76CCBC56-476E-4D19-B5D0-1BB947CED837}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76CCBC56-476E-4D19-B5D0-1BB947CED837}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76CCBC56-476E-4D19-B5D0-1BB947CED837}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9DA9B7D-133B-4F35-BD58-3CC7ACAEF6D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9DA9B7D-133B-4F35-BD58-3CC7ACAEF6D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9DA9B7D-133B-4F35-BD58-3CC7ACAEF6D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9DA9B7D-133B-4F35-BD58-3CC7ACAEF6D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4684284C-E95C-43DD-9C78-18E3D731FD65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4684284C-E95C-43DD-9C78-18E3D731FD65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4684284C-E95C-43DD-9C78-18E3D731FD65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4684284C-E95C-43DD-9C78-18E3D731FD65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC1D8569-B6D6-4B94-BD54-06A7C4005B9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC1D8569-B6D6-4B94-BD54-06A7C4005B9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC1D8569-B6D6-4B94-BD54-06A7C4005B9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC1D8569-B6D6-4B94-BD54-06A7C4005B9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{BC541223-5B04-4BDD-BD5A-3AF93C6953DC} = {4048E39D-0585-4E39-A837-9113D3131BE6}
-		{2FB5AE1A-0DD1-4931-8CB4-859F0D5065B9} = {4048E39D-0585-4E39-A837-9113D3131BE6}
+		{58837C15-A765-4ED2-9A99-B362A67AD7A6} = {B735C08E-C9C5-4054-96D0-AB3BD695C087}
+		{05CA8956-CF7D-4BF7-A2E4-DB9E7C364332} = {4048E39D-0585-4E39-A837-9113D3131BE6}
+		{76CCBC56-476E-4D19-B5D0-1BB947CED837} = {4048E39D-0585-4E39-A837-9113D3131BE6}
+		{B9DA9B7D-133B-4F35-BD58-3CC7ACAEF6D4} = {4048E39D-0585-4E39-A837-9113D3131BE6}
+		{4684284C-E95C-43DD-9C78-18E3D731FD65} = {4048E39D-0585-4E39-A837-9113D3131BE6}
+		{CC1D8569-B6D6-4B94-BD54-06A7C4005B9A} = {4048E39D-0585-4E39-A837-9113D3131BE6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FA3ADC2F-C675-471C-BFE9-E821B1D2AED9}

@@ -18,7 +18,7 @@ namespace ExistAll.DataStore
 		Task UpdateAsync(T t);
 		Task DeleteAsync(T t);
 
-		Task<List<T>> GetByFieldAsync(Expression<Func<T, object>> selector, object key);
-		Task<List<T>> GetByFieldAsync(Expression<Func<T, object>> selector, IEnumerable<object> ids);
+		Task<List<T>> GetByFieldAsync<TKey>(Expression<Func<T, TKey>> selector, TKey key);
+		Task<List<T>> GetByFieldAsync<TKey>(Expression<Func<T, TKey>> selector, IEnumerable<TKey> ids);
 	}
 }
