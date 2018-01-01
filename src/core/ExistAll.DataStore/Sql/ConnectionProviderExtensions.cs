@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Data;
 using System.Threading.Tasks;
-using ExistAll.DataStore.Sql;
 
-namespace ExistsForAll.DataStore.DapperExtensions
+namespace ExistAll.DataStore.Sql
 {
-	internal static class ConnectionProviderExtensions
+	public static class ConnectionProviderExtensions
 	{
 		public static IDbConnection GetOpenConnection(this IConnectionProvider target)
 		{

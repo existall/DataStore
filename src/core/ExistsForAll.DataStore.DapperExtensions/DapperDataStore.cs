@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ExistAll.DataStore;
+using ExistAll.DataStore.Sql;
 using ExistsForAll.DapperExtensions;
 
 namespace ExistsForAll.DataStore.DapperExtensions

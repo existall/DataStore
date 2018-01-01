@@ -2,10 +2,13 @@
   <PropertyGroup>
     <VersionPrefix>0.1.0-alpha</VersionPrefix>
     <Authors>Guy Ludvig;Omer Saraf</Authors>
-    <TargetFrameworks>netstandard1.0</TargetFrameworks>
+    <TargetFrameworks>netstandard1.6</TargetFrameworks>
     <DebugType>portable</DebugType>
     <AssemblyName>ExistAll.DataStore</AssemblyName>
     <PackageId>ExistAll.DataStore</PackageId>
     <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard1.0' ">1.6.1</NetStandardImplicitPackageVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Data.Common" Version="4.3.0" />
+  </ItemGroup>
 </Project>

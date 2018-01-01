@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace ExistsForAll.DataStore.DapperExtensions
+namespace ExistAll.DataStore.Sql
 {
 	public interface IConnectionProvider
 	{

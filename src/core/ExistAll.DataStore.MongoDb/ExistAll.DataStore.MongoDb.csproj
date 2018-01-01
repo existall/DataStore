@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <VersionPrefix>0.1.0-alpha</VersionPrefix>
-    <Authors>Guy Ludvig;Omer Saraf</Authors>
-    <TargetFrameworks>netstandard1.5</TargetFrameworks>
+    <Authors>Guy Ludvig</Authors>
+    <TargetFrameworks>netstandard1.6</TargetFrameworks>
     <DebugType>portable</DebugType>
     <AssemblyName>ExistAll.DataStore.MongoDb</AssemblyName>
     <PackageId>ExistAll.DataStore.MongoDb</PackageId>
