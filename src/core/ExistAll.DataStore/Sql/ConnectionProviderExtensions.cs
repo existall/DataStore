@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Threading.Tasks;
+using ExistAll.DataStore.Sql;
 
 namespace ExistsForAll.DataStore.DapperExtensions
 {
