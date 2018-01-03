@@ -24,14 +24,14 @@ namespace ExistsForAll.DataStore.DapperExtensions
 			await _connectionProvider.UseConnectionAsync(c => _dapper.InsertAsync(c, t));
 		}
 
-		public async Task<long> CountAsync(Action<IQueryBuilder<T>> queryManipulator = null)
+		public async Task<long> CountAsync(Action<IConditionBuilder<T>> conditionManipulator = null)
 		{
-			var query = new DapperQueryBuilder<T>();
+			var condition = new DapperConditionBuilder<T>();
 
-			queryManipulator?.Invoke(query);
+			conditionManipulator?.Invoke(condition);
 
 			return await _connectionProvider.UseConnectionResultAsync(async c =>
-				await _dapper.CountAsync<T>(c, query.Predicate, null, null));
+				await _dapper.CountAsync<T>(c, condition.Predicate, null, null));
 		}
 
 		public async Task DeleteAsync(T t)
@@ -84,7 +84,7 @@ namespace ExistsForAll.DataStore.DapperExtensions
 
 		public async Task UpdateAsync(T t)
 		{
-			await _connectionProvider.UseConnectionAsync(c =>  _dapper.UpdateAsync(c, t, null, null));
+			await _connectionProvider.UseConnectionAsync(c => _dapper.UpdateAsync(c, t, null, null));
 		}
 	}
 }

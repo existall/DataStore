@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using ExistAll.DataStore;
 using ExistAll.DataStore.Sql;
 using ExistsForAll.DapperExtensions;
@@ -24,13 +23,13 @@ namespace ExistsForAll.DataStore.DapperExtensions
 			_connectionProvider.UseConnection(c => _dapper.Insert(c, t, null, null));
 		}
 
-		public long Count(Action<IQueryBuilder<T>> queryManipulator = null)
+		public long Count(Action<IConditionBuilder<T>> conditionManipulator = null)
 		{
-			var query = new DapperQueryBuilder<T>();
+			var condition = new DapperConditionBuilder<T>();;
 
-			queryManipulator?.Invoke(query);
+			conditionManipulator?.Invoke(condition);
 
-			return _connectionProvider.UseConnection(c => _dapper.Count<T>(c, query.Predicate, null, null));
+			return _connectionProvider.UseConnection(c => _dapper.Count<T>(c, condition.Predicate, null, null));
 		}
 
 		public void Delete(T t)

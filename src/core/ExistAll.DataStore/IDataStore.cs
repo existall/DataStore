@@ -8,7 +8,7 @@ namespace ExistAll.DataStore
 		IEnumerable<T> Query(Action<IQueryBuilder<T>> queryManipulator);
 		IEnumerable<T> QueryAll();
 
-		long Count(Action<IQueryBuilder<T>> queryManipulator = null);
+		long Count(Action<IConditionBuilder<T>> conditionManipulator = null);
 
 		T GetById(T id);
 		void Add(T t);
