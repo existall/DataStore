@@ -1,0 +1,6 @@
+Microsoft.NET.Test.Sdk
+Moq
+NSubstitute
+NUnit
+xunit
+xunit.runner.visualstudio

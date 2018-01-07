@@ -3,7 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SulotionItems", "SulotionItems", "{BD7658CE-6811-47AF-89AA-A35AA69BCBA0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{E9186141-F879-4ACD-9B11-E73DE61F71EB}"
+	ProjectSection(SolutionItems) = preProject
+		paket.dependencies = paket.dependencies
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{4048E39D-0585-4E39-A837-9113D3131BE6}"
 EndProject
@@ -20,6 +23,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistAll.DataStore.NHibernate", "core\ExistAll.DataStore.NHibernate\ExistAll.DataStore.NHibernate.csproj", "{4684284C-E95C-43DD-9C78-18E3D731FD65}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExistsForAll.DataStore.DapperExtensions", "core\ExistsForAll.DataStore.DapperExtensions\ExistsForAll.DataStore.DapperExtensions.csproj", "{CC1D8569-B6D6-4B94-BD54-06A7C4005B9A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{F0D92971-8383-4121-9B9B-4B24CB0F6A6D}"
+ProjectSection(SolutionItems) = preProject
+	paket.dependencies = paket.dependencies
+EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

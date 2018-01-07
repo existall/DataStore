@@ -1,3 +1,14 @@
 source https://www.nuget.org/api/v2
 
+nuget ExistsForAll.DapperExtensions 1.1.0
+nuget Microsoft.EntityFrameworkCore 1.1.0
+nuget Microsoft.NET.Test.Sdk 15.3.0-preview-20170628-02 preview
+nuget MongoDB.Driver 2.4.0
+nuget Moq 4.7.142
+nuget NHibernate 5.0.3
+nuget NSubstitute 3.1.0
+nuget NUnit 3.8.1
 nuget System.Data.Common
+nuget Dapper
+nuget xunit 2.3.1
+nuget xunit.runner.visualstudio 2.3.1
