@@ -14,6 +14,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExistAll.DataStore\ExistAll.DataStore.csproj" />
+    <ProjectReference Include="..\ExistAll.DataStore\ExistAll.DataStore.csproj" />
   </ItemGroup>
   <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

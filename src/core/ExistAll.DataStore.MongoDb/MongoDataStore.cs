@@ -65,8 +65,7 @@ namespace ExistAll.DataStore.MongoDb
 
 		public Task<T> GetByIdAsync(T entity)
 		{
-			return GetCollection()
-				.Find(Builders<T>.Filter.Eq(x => x.Id, entity.Id)).ToListAsync()
+			return GetCollection().FindAsync(Builders<T>.Filter.Eq(x => x.Id, entity.Id)))
 				.ContinueWith(t => t.Result.SingleOrDefault());
 		}
 
